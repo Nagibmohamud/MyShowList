@@ -2,6 +2,10 @@ import { NavigationContainer } from "@react-navigation/native";
 import Homepage from "./Homepage";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Entypo from '@expo/vector-icons/Entypo';
+import { app } from "firebaseconfig";
+import { getDatabase, ref, push } from "firebase/database";
+
+const database = getDatabase(app);
 
 const Tab = createBottomTabNavigator();
 
