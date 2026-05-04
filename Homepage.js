@@ -3,6 +3,7 @@ import { View, Text, TextInput, Button, FlatList, Image,StyleSheet } from "react
 import { searchMovies } from "./search";
 
 export default function App() {
+  
   const [searchText, setSearchText] = useState("");
   const [movies, setMovies] = useState([]);
 
@@ -13,8 +14,8 @@ export default function App() {
 
   
   return (
-    <View style={{ flex: 1, padding: 20, marginTop: 50 }}>
-      <Text style={{ fontSize: 24, marginBottom: 10 }}>Search for your favorite movies!</Text>
+    <View style={styles.container}>
+      <Text style={styles.title}>Search for your favorite movies!</Text>
 
       <TextInput
         value={searchText}

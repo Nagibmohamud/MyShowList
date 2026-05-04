@@ -3,6 +3,7 @@ import Homepage from "./Homepage";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Entypo from '@expo/vector-icons/Entypo';
 import User from "./User";
+import Favourites from "./Favourites";
 const Tab = createBottomTabNavigator();
 
 export default function App() {
@@ -21,8 +22,12 @@ export default function App() {
               <Entypo name="user" size={size} color={color} />
             ),
           }} />
+          <Tab.Screen name="Favourites" component={Favourites}  options={{
+            tabBarIcon: ({ color, size }) => (
+              <Entypo name="star" size={size} color={color} />
+            ),
+          }} />
     </Tab.Navigator>
    </NavigationContainer>
   );
 }
-
