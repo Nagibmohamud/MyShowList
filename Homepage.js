@@ -1,17 +1,25 @@
 import { useState } from "react";
-import { View, Text, TextInput, Button, FlatList, Image,StyleSheet } from "react-native";
+import { View, Text, TextInput, Button, FlatList, Image,StyleSheet, Pressable } from "react-native";
 import { searchMovies } from "./search";
+import { faveSwitch } from "./Fav_switch";
 
 export default function App() {
   
   const [searchText, setSearchText] = useState("");
   const [movies, setMovies] = useState([]);
+  const [faved, setFaved] = useState([]);
 
   async function handleSearch() {
     const result = await searchMovies(searchText);
     setMovies(result);
   }
 
+  async function handleFave(item) {
+    const added = await faveSwitch(item);
+    setFaved((prev) => ({ ...prev, [item.imdbID]: added }));
+    console.log("Added to favourites:", item.Title);
+    
+  }
   
   return (
     <View style={styles.container}>
@@ -44,6 +52,12 @@ export default function App() {
               <Text style={styles.infoText}>Year: {item.Year}</Text>
               <Text style={styles.infoText}>Type: {item.Type}</Text>
             </View>
+
+            <Pressable onPress={() => handleFave(item)}>
+              <Text style={styles.heart}>
+                {faved[item.imdbID] ?  "❤️" : "🤍"}
+              </Text>
+            </Pressable>
 
               <Image
                 source={{ uri: item.Poster }}
@@ -97,5 +111,8 @@ const styles = StyleSheet.create({
     width: 100,
     height: 150,
     marginTop: 10,
+  }, heart: {
+    fontSize: 26,
+    padding: 6,
   },
 }); 
