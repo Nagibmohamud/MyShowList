@@ -1,4 +1,4 @@
-import { doc, getDoc, setDoc } from "firebase/firestore";
+import { deleteDoc, doc, getDoc, setDoc } from "firebase/firestore";
 import { auth, db } from "./fireconfig";
 
 export async function faveSwitch(item) {
@@ -11,7 +11,13 @@ export async function faveSwitch(item) {
 
     const favouritesRef = doc(db, "users", user.uid, "favourites", item.imdbID);
     const snapshot = await getDoc(favouritesRef);
-        
+
+    if (snapshot.exists()) {
+        await deleteDoc(favouritesRef);
+        console.log("Removed from favourites");
+        return false;
+    }
+    else {      
     await setDoc(favouritesRef, {
       imdbID: item.imdbID,
       title: item.Title,
@@ -19,6 +25,7 @@ export async function faveSwitch(item) {
       type: item.Type,
       poster: item.Poster,
     });
-    
+    return true;
+    }    
 
 }

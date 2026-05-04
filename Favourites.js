@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { View, Text, FlatList, Image, StyleSheet, Pressable } from "react-native";
-import { collection, getDocs, doc } from "firebase/firestore";
+import { collection, getDocs, doc, deleteDoc } from "firebase/firestore";
 import { auth, db } from "./fireconfig";
 import { onAuthStateChanged } from "firebase/auth";
 
@@ -14,6 +14,15 @@ export default function Favourites() {
         const snapshot = await getDocs(collection(db, "users", user.uid, "favourites"));
         const data = snapshot.docs.map((doc) => doc.data());
         setFavourites(data);    
+    }
+
+    async function removeFave(imdbID) {
+      if (!currentUser) return;
+
+      await deleteDoc(doc(db, "users", currentUser.uid, "favourites", imdbID));
+      setFavourites((prev) => prev.filter((item) => item.imdbID !== imdbID));
+      
+      console.log("Removed from favourites:", imdbID);
     }
 
     useEffect(() => {
@@ -46,6 +55,9 @@ export default function Favourites() {
                 <Text style={styles.movieTitle}>{item.title}</Text>
                 <Text style={styles.infoText}>{item.year} · {item.type}</Text>
               </View>
+              <Pressable onPress={() => removeFave(item.imdbID)}>
+                <Text style={styles.heart}>❤️</Text>
+              </Pressable>
             </View>
           )}
         />
