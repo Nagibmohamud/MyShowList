@@ -9,13 +9,15 @@ export default function Favourites() {
     const [favourites, setFavourites] = useState([]);
     const [currentUser, setCurrentUser] = useState(null);
 
+
+  //Getting the users favourites from Firestore
     async function fetchFavourites(user) {
 
         const snapshot = await getDocs(collection(db, "users", user.uid, "favourites"));
         const data = snapshot.docs.map((doc) => doc.data());
         setFavourites(data);    
     }
-
+//Removing movie/series from favourites
     async function removeFave(imdbID) {
       if (!currentUser) return;
 
@@ -24,7 +26,7 @@ export default function Favourites() {
       
       console.log("Removed from favourites:", imdbID);
     }
-
+//Listens for login/logout changes to update the favourites list
     useEffect(() => {
     const unsub = onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -40,7 +42,7 @@ export default function Favourites() {
   }, []);
   
    
-    
+      // Favourites page UI
     return (
        <View styles={styles.container}>  
 

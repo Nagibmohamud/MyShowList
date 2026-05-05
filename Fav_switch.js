@@ -2,7 +2,6 @@ import { deleteDoc, doc, getDoc, setDoc } from "firebase/firestore";
 import { auth, db } from "./fireconfig";
 
 export async function faveSwitch(item) {
-
     const user = auth.currentUser;
 
     if (!user) {

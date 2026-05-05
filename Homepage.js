@@ -9,11 +9,13 @@ export default function App() {
   const [movies, setMovies] = useState([]);
   const [faved, setFaved] = useState([]);
 
+  // Search for movies based on the search text
   async function handleSearch() {
     const result = await searchMovies(searchText);
     setMovies(result);
   }
 
+  // Handle adding/removing movies from favourites
   async function handleFave(item) {
     const added = await faveSwitch(item);
     setFaved((prev) => ({ ...prev, [item.imdbID]: added }));
@@ -21,6 +23,7 @@ export default function App() {
     
   }
   
+  // Homepage UI
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Search for your favorite movies!</Text>
@@ -52,7 +55,8 @@ export default function App() {
               <Text style={styles.infoText}>Year: {item.Year}</Text>
               <Text style={styles.infoText}>Type: {item.Type}</Text>
             </View>
-
+            
+            {/*Favourite button red if liked, white if not */}
             <Pressable onPress={() => handleFave(item)}>
               <Text style={styles.heart}>
                 {faved[item.imdbID] ?  "❤️" : "🤍"}

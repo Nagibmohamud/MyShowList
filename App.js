@@ -7,11 +7,12 @@ import Favourites from "./Favourites";
 const Tab = createBottomTabNavigator();
 
 export default function App() {
- 
+  
+ //Creates the bottom tab nav with icons
   return (
    <NavigationContainer>
     <Tab.Navigator>
-      
+
       <Tab.Screen name="Home" component={Homepage}  options={{
             tabBarIcon: ({ color, size }) => (
               <Entypo name="home" size={size} color={color} />

@@ -5,6 +5,7 @@ import { View,Text,TextInput,Button } from "react-native";
 import { useState } from "react";
 import { StyleSheet } from "react-native";
 
+//Firebase auth and database setup
 const auth = getAuth(app);
 const database = getDatabase(app);
 
@@ -14,6 +15,7 @@ export default function User() {
     const [password, setPassword] = useState("");
     const [user, setUser] = useState(null);
 
+    //Sign up
     const handleSignUp = () => {
         createUserWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
@@ -25,6 +27,7 @@ export default function User() {
             });
 
         }  
+    //Sign in
     const handleSignIn = () => { 
         signInWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
@@ -35,7 +38,7 @@ export default function User() {
                 console.error("Error signing in:", error);
             });
         }
-
+    //Sign out
         const handleSignOut = () => {
             signOut(auth)
                 .then(() => {
@@ -48,7 +51,7 @@ export default function User() {
             }
 
 
-
+//User page UI
 return (
     <View>
         <TextInput placeholder="Name" value={name} onChangeText={setName} style={styles.input} />
