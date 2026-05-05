@@ -8,6 +8,13 @@ export default function Favourites() {
 
     const [favourites, setFavourites] = useState([]);
     const [currentUser, setCurrentUser] = useState(null);
+    
+
+  //Refreshes the favourites list 
+    async function refreshFavourites() {
+      if (!currentUser) return;
+      await fetchFavourites(currentUser);
+    }
 
 
   //Getting the users favourites from Firestore
@@ -45,6 +52,11 @@ export default function Favourites() {
       // Favourites page UI
     return (
        <View styles={styles.container}>  
+
+        <Pressable
+          onPress={refreshFavourites}>
+          <Text>Refresh </Text>
+        </Pressable>
 
         <FlatList
           data={favourites}
