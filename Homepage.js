@@ -26,21 +26,21 @@ export default function App() {
   // Homepage UI
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Search for your favorite movies!</Text>
+      <Text style={styles.heading}>Search </Text>
 
+      <View style={styles.searchRow}>
       <TextInput
         value={searchText}
         onChangeText={setSearchText}
         placeholder="Search for a movie"
-        style={{
-          borderWidth: 1,
-          borderColor: "black",
-          padding: 10,
-          marginBottom: 10,
-        }}
+        placeholderTextColor="#888"
+        style={styles.input}
       />
 
-      <Button title="Search" onPress={handleSearch} />
+      <Pressable style={styles.searchButton} onPress={handleSearch}>
+        <Text style={styles.searchButtonText}>Search</Text>
+      </Pressable>
+      </View>
 
       <FlatList
         data={movies}
@@ -49,7 +49,7 @@ export default function App() {
 
           <View style={styles.card}>
             <View style={styles.textContainer}>
-              <Text style={styles.movieTitle}>
+              <Text style={styles.title}>
                 {item.Title}
               </Text>
               <Text style={styles.infoText}>Year: {item.Year}</Text>
@@ -77,46 +77,74 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
-    marginTop: 50,
+    backgroundColor: "#111",
+    paddingTop: 60,
+    paddingHorizontal: 16,
   },
   title: {
     fontSize: 24,
     marginBottom: 10,
+    color: "#fff",
+    fontWeight: "700",
   },
   input: {
+    flex: 1,
+    backgroundColor: "#222",
+    color: "#fff",
+    borderRadius: 10,
+    paddingHorizontal: 14,
+    paddingVertical: 10,
+    fontSize: 16,
     borderWidth: 1,
-    borderColor: "black",
-    padding: 10,
-    marginBottom: 10,
+    borderColor: "#333",
   },
   card: {
     flexDirection: "row",
-    marginTop: 20,
+    marginBottom: 12,
     padding: 10,
-    borderWidth: 5,
-    borderColor: "#0000003f",
+    borderRadius: 12,
     alignItems: "center",
-  },
-  textContainer: {
-    flex: 1,
-    paddingRight: 15,
-  },
-  movieTitle: {
-    fontWeight: "bold",
-    fontSize: 18,
-    marginBottom: 10,
-  },
-  infoText: {
-    fontSize: 16,
-    marginBottom: 10,
+    backgroundColor: "#1e1e1e",
+    gap: 12,
   },
   poster: {
-    width: 100,
-    height: 150,
-    marginTop: 10,
+    width: 60,
+    height: 90,
+    borderRadius: 6,
+    backgroundColor: "#333",
   }, heart: {
     fontSize: 26,
     padding: 6,
   },
+  heading: {
+    fontSize: 28,
+    fontWeight: "800",
+    color: "#fff",
+    letterSpacing: 1,
+    paddingBottom: 10,
+  },
+   searchRow: {
+    flexDirection: "row",
+    marginBottom: 16,
+    gap: 8,
+  },searchButton: {
+    backgroundColor: "#e50914",
+    borderRadius: 10,
+    paddingHorizontal: 18,
+    justifyContent: "center",
+  },
+   searchButtonText: {
+    color: "#fff",
+    fontWeight: "700",
+    fontSize: 16,
+  },textContainer: {
+    flex: 1,
+  },
+  infoText: {
+    color: "#aaa",
+    fontSize: 13,
+    textTransform: "capitalize",
+    marginBottom: 2,
+  },
+  
 }); 

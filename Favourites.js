@@ -3,6 +3,7 @@ import { View, Text, FlatList, Image, StyleSheet, Pressable } from "react-native
 import { collection, getDocs, doc, deleteDoc } from "firebase/firestore";
 import { auth, db } from "./fireconfig";
 import { onAuthStateChanged } from "firebase/auth";
+import { ref } from "firebase/database";
 
 export default function Favourites() {
 
@@ -51,12 +52,15 @@ export default function Favourites() {
    
       // Favourites page UI
     return (
-       <View styles={styles.container}>  
+        
+       <View style={styles.container}>
 
-        <Pressable
-          onPress={refreshFavourites}>
-          <Text>Refresh </Text>
-        </Pressable>
+        <View style={styles.headerRow}>
+          <Text style={styles.heading}>Favourites</Text>
+            <Pressable style={styles.refreshbutton} onPress={refreshFavourites}>
+              <Text style={styles.refreshText}>Refresh </Text>
+            </Pressable>
+        </View>
 
         <FlatList
           data={favourites}
@@ -66,8 +70,8 @@ export default function Favourites() {
             <View style={styles.card}>
               <Image source={{ uri: item.poster }} style={styles.poster} />
               <View style={styles.textContainer}>
-                <Text style={styles.movieTitle}>{item.title}</Text>
-                <Text style={styles.infoText}>{item.year} · {item.type}</Text>
+                <Text style={styles.title}>{item.title}</Text>
+                <Text style={styles.meta}>{item.year} · {item.type}</Text>
               </View>
               <Pressable onPress={() => removeFave(item.imdbID)}>
                 <Text style={styles.heart}>❤️</Text>
@@ -84,46 +88,62 @@ export default function Favourites() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
-    marginTop: 50,
+    backgroundColor: "#111",
+    paddingTop: 60,
+    paddingHorizontal: 16,
   },
   title: {
     fontSize: 24,
     marginBottom: 10,
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: "black",
-    padding: 10,
-    marginBottom: 10,
+    color: "#fff",
+    fontWeight: "700",
   },
   card: {
     flexDirection: "row",
-    marginTop: 20,
+    marginBottom: 12,
     padding: 10,
-    borderWidth: 5,
-    borderColor: "#0000003f",
+    borderRadius: 12,
     alignItems: "center",
-  },
-  textContainer: {
-    flex: 1,
-    paddingRight: 15,
-  },
-  movieTitle: {
-    fontWeight: "bold",
-    fontSize: 18,
-    marginBottom: 10,
-  },
-  infoText: {
-    fontSize: 16,
-    marginBottom: 10,
+    backgroundColor: "#1e1e1e",
+    gap: 12,
   },
   poster: {
-    width: 100,
-    height: 150,
-    marginTop: 10,
+    width: 60,
+    height: 90,
+    borderRadius: 6,
+    backgroundColor: "#333",
   }, heart: {
     fontSize: 26,
     padding: 6,
   },
+  refreshbutton: {
+    paddingHorizontal: 14,
+    paddingVertical: 7,
+    borderRadius: 8,
+    backgroundColor: "#ff0000",
+  },
+  refreshText: {
+    color: "#fff",
+    fontWeight: "bold",
+  },
+  headerRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: 16,
+  },heading: {
+    fontSize: 28,
+    fontWeight: "800",
+    color: "#fff",
+    letterSpacing: 1,
+  },
+  meta: {
+    color: "#aaa",
+    fontSize: 13,
+    textTransform: "capitalize",
+  },
+    textContainer: { 
+    flex: 1,
+  },
+  
 }); 
