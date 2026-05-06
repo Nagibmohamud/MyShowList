@@ -18,14 +18,14 @@ export default function App() {
               <Entypo name="home" size={size} color={color} />
             ),
           }} />
-          <Tab.Screen name="User" component={User}  options={{
-            tabBarIcon: ({ color, size }) => (
-              <Entypo name="user" size={size} color={color} />
-            ),
-          }} />
           <Tab.Screen name="Favourites" component={Favourites}  options={{
             tabBarIcon: ({ color, size }) => (
               <Entypo name="star" size={size} color={color} />
+            ),
+          }} />
+          <Tab.Screen name="User" component={User}  options={{
+            tabBarIcon: ({ color, size }) => (
+              <Entypo name="user" size={size} color={color} />
             ),
           }} />
     </Tab.Navigator>
